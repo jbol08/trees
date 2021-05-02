@@ -17,6 +17,15 @@ class BinaryTree {
    * the length of the shortest path from the root to a leaf. */
 
   minDepth() {
+    if (!this.root) return 0;
+    function minLevels(node) {
+      if (node.left === null && node.right === null) return 1;
+      if (node.left === null) return minLevels(node.right) + 1;
+      if (node.right === null) return minLevels(node.left) + 1;
+      return (Math.min(minLevels(node.left), minLevels(node.right)) + 1);
+    }
+    return minLevels(this.root);
+    
 
   }
 
@@ -24,6 +33,14 @@ class BinaryTree {
    * the length of the longest path from the root to a leaf. */
 
   maxDepth() {
+    if (!this.root) return 0;
+    function maxLevels(node) {
+      if (node.left === null && node.right === null) return 1;
+      if (node.left === null) return maxLevels(node.right) + 1;
+      if (node.right === null) return maxLevels(node.left) + 1;
+      return (Math.max(maxLevels(node.left), maxLevels(node.right)) + 1);
+    }
+    return maxLevels(this.root);
 
   }
 
@@ -31,6 +48,17 @@ class BinaryTree {
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
   maxSum() {
+    if (!this.root) return 0;
+    let sum = 0;
+    function maxTotal(node) {
+      if (node === null) return 0;
+      let right = maxTotal(node.right);
+      let left = maxTotal(node.left);
+      sum = Math.max(left + right + sum + node.val);
+      return Math.max(0,left + node.val, right + node.val);
+    }
+    maxTotal(this.root);
+    return sum;
 
   }
 
@@ -38,6 +66,7 @@ class BinaryTree {
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
+    
 
   }
 
@@ -45,31 +74,31 @@ class BinaryTree {
    * areCousins(node1, node2): determine whether two nodes are cousins
    * (i.e. are at the same level but have different parents. ) */
 
-  areCousins(node1, node2) {
+  // areCousins(node1, node2) {
 
-  }
+  // }
 
-  /** Further study!
-   * serialize(tree): serialize the BinaryTree object tree into a string. */
+  // /** Further study!
+  //  * serialize(tree): serialize the BinaryTree object tree into a string. */
 
-  static serialize() {
+  // static serialize() {
 
-  }
+  // }
 
-  /** Further study!
-   * deserialize(stringTree): deserialize stringTree into a BinaryTree object. */
+  // /** Further study!
+  //  * deserialize(stringTree): deserialize stringTree into a BinaryTree object. */
 
-  static deserialize() {
+  // static deserialize() {
 
-  }
+  // }
 
-  /** Further study!
-   * lowestCommonAncestor(node1, node2): find the lowest common ancestor
-   * of two nodes in a binary tree. */
+  // /** Further study!
+  //  * lowestCommonAncestor(node1, node2): find the lowest common ancestor
+  //  * of two nodes in a binary tree. */
 
-  lowestCommonAncestor(node1, node2) {
+  // lowestCommonAncestor(node1, node2) {
     
-  }
+  // }
 }
 
 module.exports = { BinaryTree, BinaryTreeNode };
