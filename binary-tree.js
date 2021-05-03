@@ -52,10 +52,10 @@ class BinaryTree {
     let sum = 0;
     function maxTotal(node) {
       if (node === null) return 0;
-      let right = maxTotal(node.right);
-      let left = maxTotal(node.left);
-      sum = Math.max(left + right + sum + node.val);
-      return Math.max(0,left + node.val, right + node.val);
+      let rightSum = maxTotal(node.right);
+      let leftSum = maxTotal(node.left);
+      sum = Math.max(sum, node.val + leftSum + rightSum );
+      return Math.max(0,leftSum + node.val, rightSum + node.val);
     }
     maxTotal(this.root);
     return sum;
@@ -66,7 +66,21 @@ class BinaryTree {
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
-    
+    if (!this.root) return null;
+    let queue = [this.root];
+    let closest = null;
+    while (queue.length) {
+      let currentNode = queue.shift();
+      let currVal = currentNode.val;
+      let higherThan = lowerBound < currVal;
+      let newClosest = currVal < closest || closest === null;
+      if (higherThan && newClosest) {
+        closest = currVal
+      }
+      if (currentNode.left) queue.push(currentNode.left);
+      if (currentNode.right) queue.push(currentNode.right);
+    }
+    return closest;
 
   }
 
